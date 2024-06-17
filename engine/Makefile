@@ -312,9 +312,11 @@ INCS += $(INCLUDES)
 ADPCM 	        = source/adpcmlib/adpcm.o
 
 ifdef BUILD_GFX
-GFX 	        = source/gfxlib/bilinear.o                                                          \
+GFX 	        = source/gfxlib/2xSaI.o                                                             \
+                  source/gfxlib/bilinear.o                                                          \
                   source/gfxlib/dotmatrix.o                                                         \
                   source/gfxlib/gfx.o                                                               \
+                  source/gfxlib/hq2x.o                                                              \
                   source/gfxlib/scale2x.o                                                           \
                   source/gfxlib/scanline.o                                                          \
                   source/gfxlib/simple2x.o                                                          \

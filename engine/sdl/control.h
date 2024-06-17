@@ -181,3 +181,5 @@ int is_touch_area(float x, float y);
 
 #endif
 
+#endif
+

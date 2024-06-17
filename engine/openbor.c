@@ -2546,7 +2546,7 @@ void clearsettings()
     savedata.showtitles = 0;
     savedata.windowpos = 0;
     savedata.logo = 0;
-    savedata.uselog = 1;
+    savedata.uselog = 0;
     savedata.debuginfo = 0;
     savedata.fullscreen = 1;
     savedata.vsync = 0;
@@ -9427,7 +9427,7 @@ s_model *load_cached_model(char *name, char *owner, char unload)
                     newchar->branch = malloc(MAX_NAME_LEN + 1);
                     newchar->branch[0] = 0;
                 }
-                strncpy(newchar->branch, value, MAX_NAME_LEN);
+                strncpy_s(newchar->branch, MAX_NAME_LEN, value, MAX_NAME_LEN);
                 break;
             case CMD_MODEL_CANTGRAB:
             case CMD_MODEL_NOTGRAB:
@@ -13373,7 +13373,7 @@ void load_levelorder()
         case CMD_LEVELORDER_BRANCH:
             //    2007-2-22 level branch name
             CHKDEF;
-            strncpy(branch_name, GET_ARG(1), MAX_NAME_LEN);
+            strncpy_s(branch_name, MAX_NAME_LEN, GET_ARG(1), MAX_NAME_LEN);
             break;
         case CMD_LEVELORDER_P1LIFE:
         case CMD_LEVELORDER_P2LIFE:
@@ -36591,13 +36591,13 @@ void savelevelinfo()
         save->pSpawnmp[i] = player[i].spawnmp;
         save->pWeapnum[i] = player[i].weapnum;
         save->pColourmap[i] = player[i].colourmap;
-        strncpy(save->pName[i], player[i].name, MAX_NAME_LEN);
+        strncpy_s(save->pName[i], MAX_NAME_LEN, player[i].name, MAX_NAME_LEN);
     }
     save->credits = credits;
     save->level = current_level;
     save->stage = current_stage;
     save->which_set = current_set;
-    strncpy(save->dName, set->name, MAX_NAME_LEN - 1);
+    strncpy_s(save->dName, MAX_NAME_LEN, set->name, MAX_NAME_LEN);
     for(i = 0; i < sizeof(allowselect_args); i++) save->allowSelectArgs[i] = '\0'; // clear
     for(i = 0; i < sizeof(allowselect_args); i++) save->allowSelectArgs[i] = allowselect_args[i];
 }
@@ -37046,7 +37046,7 @@ int selectplayer(int *players, char *filename, int useSavedGame)
 				{
 					continue;
 				}
-				strncpy(player[i].name, skipselect[i], MAX_NAME_LEN);
+				strncpy_s(player[i].name, MAX_NAME_LEN, skipselect[i], MAX_NAME_LEN);
 
 				if (defaultselect)
 				{
@@ -37465,7 +37465,7 @@ void playgame(int *players,  unsigned which_set, int useSavedGame)
                 player[i].weapnum = save->pWeapnum[i];
                 player[i].spawnhealth = save->pSpawnhealth[i];
                 player[i].spawnmp = save->pSpawnmp[i];
-                strncpy(player[i].name, save->pName[i], MAX_NAME_LEN);
+                strncpy_s(player[i].name, MAX_NAME_LEN, save->pName[i], MAX_NAME_LEN);
             }
             credits = save->credits;
         }
@@ -37714,7 +37714,7 @@ int menu_difficulty()
             else if(bonus >= levelsets[selector].ifcomplete)
             {
                 saveslot = selector;
-                strncpy(savelevel[saveslot].dName, levelsets[saveslot].name, MAX_NAME_LEN - 1);
+                strncpy_s(savelevel[saveslot].dName, MAX_NAME_LEN - 1, levelsets[saveslot].name, MAX_NAME_LEN - 1);
                 newgameMenu = 0;
                 return saveslot;
             }
@@ -37765,7 +37765,7 @@ int menu_difficulty()
             else if(bonus >= levelsets[selector].ifcomplete)
             {
                 saveslot = selector;
-                strncpy(savelevel[saveslot].dName, levelsets[saveslot].name, MAX_NAME_LEN - 1);
+                strncpy_s(savelevel[saveslot].dName, MAX_NAME_LEN - 1, levelsets[saveslot].name, MAX_NAME_LEN - 1);
                 newgameMenu = 0;
                 return saveslot;
             }

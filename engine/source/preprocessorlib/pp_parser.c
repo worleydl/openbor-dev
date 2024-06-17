@@ -714,7 +714,7 @@ HRESULT pp_parser_stringify(pp_parser *self)
             }
             else
             {
-                strncat(self->token.theSource, source, 1);
+                strncat_s(self->token.theSource, 1, source, 1);
             }
 
             if(strlen(self->token.theSource) + 2 > MAX_TOKEN_LENGTH)

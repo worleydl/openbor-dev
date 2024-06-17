@@ -44,6 +44,7 @@ INCLUDES        = $(SDKPATH)/include \
 LIBRARIES       = $(SDKPATH)/lib \
 		  $(EXTRA_LIBRARIES)
 ARCHFLAGS       = -m64
+BUILD_DEBUG     = 1
 ifeq ($(BUILD_WIN), 0)
 BUILD_DEBUG     = 1
 endif

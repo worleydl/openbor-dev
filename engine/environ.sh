@@ -197,7 +197,7 @@ case $1 in
 5)
    if test -e "/mingw64/bin/x86_64-w64-mingw32-gcc"; then
      export WINDEV=/mingw64/bin
-     export SDKPATH=../tools/win-sdk
+     export SDKPATH=/mingw64
      export PREFIX=x86_64-w64-mingw32-
      export PATH=$WINDEV:$PATH
      export CROSSCOMPILE_LINUX_WIN=1

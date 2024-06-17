@@ -452,7 +452,7 @@ const char* PC_GetJoystickKeyName(int portnum, int keynum)
 	int firstHat = firstAxis + (2*joysticks[portnum].NumAxes);
 	int firstUnknown = firstHat + (4*joysticks[portnum].NumHats);
 
-	     if (keynum < firstAxis+1)            return JoystickButtonNames[keycode];
+	     if (keynum < firstAxis+1)            return SDL_GameControllerGetStringForButton(keynum - 1);
 	else if (keynum < firstHat+1)             return JoystickAxisNames[keycode-firstAxis];
 	else if (keynum < firstUnknown+1)         return JoystickHatNames[keycode-firstHat];
 	else                                      return JoystickUnknownNames[keycode-firstUnknown];

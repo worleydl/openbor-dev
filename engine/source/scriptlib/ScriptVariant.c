@@ -270,7 +270,7 @@ void ScriptVariant_ToString(ScriptVariant *svar, LPSTR buffer )
         sprintf( buffer, "%lf", svar->dblVal );
         break;
     case VT_PTR:
-        sprintf(buffer, "#%ld", (long)(svar->ptrVal));
+        sprintf(buffer, "#%lld", (long long)(svar->ptrVal));
         break;
     case VT_STR:
         sprintf(buffer, "%s", StrCache_Get(svar->strVal));
@@ -292,7 +292,7 @@ static int ScriptVariant_LengthAsString(ScriptVariant *svar)
     case VT_DECIMAL:
         return snprintf(NULL, 0, "%lf", svar->dblVal);
     case VT_PTR:
-        return snprintf(NULL, 0, "#%ld", (long)(svar->ptrVal));
+        return snprintf(NULL, 0, "#%lld", (long long)(svar->ptrVal));
     case VT_STR:
         // could use StrCache_Len instead to improve speed
         return snprintf(NULL, 0, "%s", StrCache_Get(svar->strVal));

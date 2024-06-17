@@ -81,7 +81,7 @@ static __inline__ UInt32 Swap32(UInt32 D)
     return((D << 24) | ((D << 8) & 0x00FF0000) | ((D >> 8) & 0x0000FF00) | (D >> 24));
 }
 
-static __inline__ UInt64 Swap64(UInt64 val)
+static __inline__ unsigned long long Swap64(unsigned long long val)
 {
     UInt32 hi, lo;
     /* Separate into high and low 32-bit values and swap them */

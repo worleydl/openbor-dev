@@ -2621,7 +2621,7 @@ void clearsettings()
     savedata.logo = 1;
     savedata.uselog = 1;
     savedata.debuginfo = 0;
-    savedata.fullscreen = 0;
+    savedata.fullscreen = 1;
     savedata.fpslimit = 1; // default to vsync
 
 	#if WII

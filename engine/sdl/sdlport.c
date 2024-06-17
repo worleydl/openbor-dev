@@ -90,6 +90,9 @@ int main(int argc, char *argv[])
 	}
 	CFRelease(resourcesDirectoryURL);
 	chdir(resourcePath);
+#else
+	// UWP loads off external
+	chdir("E:\\openbor");
 #endif
 
 #ifdef CUSTOM_SIGNAL_HANDLER

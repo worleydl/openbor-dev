@@ -2548,7 +2548,7 @@ void clearsettings()
     savedata.logo = 0;
     savedata.uselog = 1;
     savedata.debuginfo = 0;
-    savedata.fullscreen = 0;
+    savedata.fullscreen = 1;
     savedata.vsync = 0;
 
 	#if WII

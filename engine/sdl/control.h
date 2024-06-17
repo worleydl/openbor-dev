@@ -78,7 +78,6 @@
 #define SDLK_FIRST SDL_SCANCODE_UNKNOWN
 #define SDLK_LAST  SDL_NUM_SCANCODES
 #define SDL_GetKeyState SDL_GetKeyboardState
-#define SDL_JoystickName(x) SDL_JoystickName(joystick[x])
 
 typedef struct{
 	int		settings[JOY_MAX_INPUTS];

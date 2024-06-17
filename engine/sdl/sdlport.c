@@ -6,6 +6,8 @@
  * Copyright (c)  OpenBOR Team
  */
 
+#define SDLMAIN_DECLSPEC __declspec(dllexport)
+
 #include "sdlport.h"
 #include "packfile.h"
 #include "ram.h"
@@ -19,7 +21,7 @@
 #ifdef DARWIN
 #include <CoreFoundation/CoreFoundation.h>
 #elif WIN
-#undef main
+//#undef main
 #endif
 
 char packfile[MAX_FILENAME_LEN] = {"bor.pak"};

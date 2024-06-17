@@ -158,18 +158,19 @@ void getPads(Uint8* keystate, Uint8* keystate_def)
 				borShutdown(0, DEFAULT_SHUTDOWN_MESSAGE);
 				break;
 
+			case SDL_CONTROLLERBUTTONUP:
 			case SDL_JOYBUTTONUP:
 				for(i=0; i<JOY_LIST_TOTAL; i++)
 				{
-					if(ev.jbutton.which == i)
+					if(ev.cbutton.which == i)
 					{
 						if(joysticks[i].Type == JOY_TYPE_GAMEPARK)
 						{
-							if(ev.jbutton.button == 0 || ev.jbutton.button == 7 || ev.jbutton.button == 1) joysticks[i].Hats &= ~(JoystickBits[1]);
-							if(ev.jbutton.button == 6 || ev.jbutton.button == 5 || ev.jbutton.button == 7) joysticks[i].Hats &= ~(JoystickBits[2]);
-							if(ev.jbutton.button == 4 || ev.jbutton.button == 3 || ev.jbutton.button == 5) joysticks[i].Hats &= ~(JoystickBits[3]);
-							if(ev.jbutton.button == 2 || ev.jbutton.button == 1 || ev.jbutton.button == 3) joysticks[i].Hats &= ~(JoystickBits[4]);
-							if(ev.jbutton.button >= 8 && ev.jbutton.button <= 18) joysticks[i].Buttons &= ~(JoystickBits[ev.jbutton.button - 3]);
+							if(ev.cbutton.button == 0 || ev.cbutton.button == 7 || ev.cbutton.button == 1) joysticks[i].Hats &= ~(JoystickBits[1]);
+							if(ev.cbutton.button == 6 || ev.cbutton.button == 5 || ev.cbutton.button == 7) joysticks[i].Hats &= ~(JoystickBits[2]);
+							if(ev.cbutton.button == 4 || ev.cbutton.button == 3 || ev.cbutton.button == 5) joysticks[i].Hats &= ~(JoystickBits[3]);
+							if(ev.cbutton.button == 2 || ev.cbutton.button == 1 || ev.cbutton.button == 3) joysticks[i].Hats &= ~(JoystickBits[4]);
+							if(ev.cbutton.button >= 8 && ev.cbutton.button <= 18) joysticks[i].Buttons &= ~(JoystickBits[ev.cbutton.button - 3]);
 						}
 						/*else
                         {
@@ -182,13 +183,14 @@ void getPads(Uint8* keystate, Uint8* keystate_def)
 				}
 				break;
 
+			case SDL_CONTROLLERBUTTONDOWN:
 			case SDL_JOYBUTTONDOWN:
 				for(i=0; i<JOY_LIST_TOTAL; i++)
 				{
 					if (SDL_JoystickInstanceID(joystick[i]) == ev.jbutton.which)
 					{
 						//printf("Button down: controller %i, button %i\n", i, ev.jbutton.button);
-						lastjoy = 1 + i * JOY_MAX_INPUTS + ev.jbutton.button;
+						lastjoy = 1 + i * JOY_MAX_INPUTS + ev.cbutton.button;
 
 						// add key flag from event
 						/*#ifdef ANDROID
@@ -222,27 +224,29 @@ void getPads(Uint8* keystate, Uint8* keystate_def)
 				}
 				break;
 
+			case SDL_CONTROLLERAXISMOTION:
 			case SDL_JOYAXISMOTION:
 				for(i=0; i<JOY_LIST_TOTAL; i++)
 				{
-					if (SDL_JoystickInstanceID(joystick[i]) == ev.jaxis.which)
+					if (SDL_JoystickInstanceID(joystick[i]) == ev.caxis.which)
 					{
-						int axisfirst = 1 + i * JOY_MAX_INPUTS + joysticks[i].NumButtons + 2*ev.jaxis.axis;
-						x = (joysticks[i].Axes >> (2*ev.jaxis.axis)) & 0x03; // previous state of axis
-						if(ev.jaxis.value <  -1*T_AXIS && !(x & 0x01))		lastjoy = axisfirst;
-						if(ev.jaxis.value >     T_AXIS && !(x & 0x02))		lastjoy = axisfirst + 1;
+						int axisfirst = 1 + i * JOY_MAX_INPUTS + joysticks[i].NumButtons + 2*ev.caxis.axis;
+						x = (joysticks[i].Axes >> (2*ev.caxis.axis)) & 0x03; // previous state of axis
+						if(ev.caxis.value <  -1*T_AXIS && !(x & 0x01))		lastjoy = axisfirst;
+						if(ev.caxis.value >     T_AXIS && !(x & 0x02))		lastjoy = axisfirst + 1;
 						//if(lastjoy) fprintf(stderr, "SDL_JOYAXISMOTION - Joystick %i Axis %i = Position %i (Index %i)\n", i, ev.jaxis.axis, ev.jaxis.value, lastjoy);
 
 						// add key flag from event
 						#ifdef ANDROID
-                        if(ev.jaxis.value < -1*T_AXIS)  { joysticks[i].Axes |= 0x01 << (ev.jaxis.axis*2); }
-                        if(ev.jaxis.value >    T_AXIS)  { joysticks[i].Axes |= 0x02 << (ev.jaxis.axis*2); }
+                        if(ev.caxis.value < -1*T_AXIS)  { joysticks[i].Axes |= 0x01 << (ev.caxis.axis*2); }
+                        if(ev.caxis.value >    T_AXIS)  { joysticks[i].Axes |= 0x02 << (ev.caxis.axis*2); }
                         #endif
 					}
 				}
 				break;
 
             // PLUG AND PLAY
+	    case SDL_CONTROLLERDEVICEADDED:
             case SDL_JOYDEVICEADDED:
                 if (ev.jdevice.which < JOY_LIST_TOTAL)
                 {
@@ -258,6 +262,7 @@ void getPads(Uint8* keystate, Uint8* keystate_def)
                 }
                 break;
 
+	    case SDL_CONTROLLERDEVICEREMOVED:
             case SDL_JOYDEVICEREMOVED:
                 if (ev.jdevice.which < JOY_LIST_TOTAL)
                 {

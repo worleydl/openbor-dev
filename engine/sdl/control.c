@@ -266,11 +266,22 @@ void getPads(Uint8* keystate, Uint8* keystate_def)
             }
 
 			// check axes
+			// DLW: Updated to map left stick axis events to dpad so players can use both
 			for(j = 0; j < joysticks[i].NumAxes; j++)
 			{
 				axis = SDL_GameControllerGetAxis(joystick[i], j);
-				if(axis < -1*T_AXIS)  { joysticks[i].Axes |= 0x01 << (j*2); }
-				if(axis >    T_AXIS)  { joysticks[i].Axes |= 0x02 << (j*2); }
+				if(axis < -1*T_AXIS)
+				{
+					joysticks[i].Axes |= 0x01 << (j*2);
+					if (j == 0)	joysticks[i].Buttons |= 1 << SDL_CONTROLLER_BUTTON_DPAD_LEFT; // Delete these lines and the ones below if you need separate binds for stick/dpad
+					else if (j == 1) joysticks[i].Buttons |= 1 << SDL_CONTROLLER_BUTTON_DPAD_UP;
+				}
+				if(axis >    T_AXIS)
+				{
+					joysticks[i].Axes |= 0x02 << (j*2);
+					if (j == 0)	joysticks[i].Buttons |= 1 << SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
+					else if (j == 1) joysticks[i].Buttons |= 1 << SDL_CONTROLLER_BUTTON_DPAD_DOWN;
+				}
 			}
 
 			// check hats

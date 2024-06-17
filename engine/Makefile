@@ -22,7 +22,7 @@ endif
 
 ifdef BUILD_WIN
 TARGET          = $(VERSION_NAME).elf
-TARGET_FINAL    = $(VERSION_NAME).exe
+TARGET_FINAL    = $(VERSION_NAME).dll
 TARGET_PLATFORM = WIN
 TARGET_ARCH     = x86_64-w64-mingw32
 TARGET_RESOURCE = resources/$(VERSION_NAME).res
@@ -654,7 +654,7 @@ all : $(TARGET) $(TARGET_FINAL)
 $(TARGET) : $(OBJS) $(RES)
 	@echo
 	@echo Linking $(TARGET_PLATFORM) Port: $(TARGET)...
-	@$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(TARGET_RESOURCE) $(LIBS)
+	@$(CC) $(CFLAGS) -shared -o $(TARGET) -Wl,--out-implib=openbor.lib $(OBJS) $(TARGET_RESOURCE) $(LIBS)
 $(TARGET_FINAL) : $(TARGET)
 	@echo Stripping $(TARGET_PLATFORM) Port: $(TARGET_FINAL)...
 	@$(STRIP)

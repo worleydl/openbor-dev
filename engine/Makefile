@@ -24,7 +24,7 @@ ifdef BUILD_WIN
 TARGET          = $(VERSION_NAME).elf
 TARGET_FINAL    = $(VERSION_NAME).exe
 TARGET_PLATFORM = WIN
-TARGET_ARCH     = x86
+TARGET_ARCH     = x86_64-w64-mingw32
 TARGET_RESOURCE = resources/$(VERSION_NAME).res
 OBJTYPE         = win32
 BUILD_SDL       = 1
@@ -37,16 +37,13 @@ BUILD_VORBIS    = 1
 BUILD_WEBM      = 1
 BUILDING        = 1
 YASM 	        = yasm$(EXTENSION)
-CC              = $(WINDEV)/$(PREFIX)gcc$(EXTENSION)
+CC              = gcc
 INCLUDES        = $(SDKPATH)/include \
                   $(SDKPATH)/include/SDL2 \
 		  $(EXTRA_INCLUDES)
 LIBRARIES       = $(SDKPATH)/lib \
 		  $(EXTRA_LIBRARIES)
-ARCHFLAGS       = -m32
-ifeq ($(findstring 86, $(TARGET_ARCH)), 86)
-BUILD_MMX       = 1
-endif
+ARCHFLAGS       = -m64
 ifeq ($(BUILD_WIN), 0)
 BUILD_DEBUG     = 1
 endif
@@ -187,7 +184,7 @@ STRIP           = cp $(TARGET) $(TARGET_FINAL)
 ifndef BUILD_DEBUG
 ifndef NO_STRIP
 ifdef BUILD_WIN
-STRIP 	        = $(WINDEV)/$(PREFIX)strip$(EXTENSION) $(TARGET) -o $(TARGET_FINAL)
+STRIP 	        = strip$(EXTENSION) $(TARGET) -o $(TARGET_FINAL)
 endif
 ifdef BUILD_LINUX
 STRIP 	        = $(LNXDEV)/$(PREFIX)strip $(TARGET) -o $(TARGET_FINAL)
@@ -248,22 +245,20 @@ INCS += $(INCLUDES)
 ADPCM 	        = source/adpcmlib/adpcm.o
 
 ifdef BUILD_GFX
-GFX 	        = source/gfxlib/2xSaI.o                                                             \
-                  source/gfxlib/bilinear.o                                                          \
+GFX 	        = source/gfxlib/bilinear.o                                                          \
                   source/gfxlib/dotmatrix.o                                                         \
                   source/gfxlib/gfx.o                                                               \
-                  source/gfxlib/hq2x.o                                                              \
                   source/gfxlib/scale2x.o                                                           \
                   source/gfxlib/scanline.o                                                          \
                   source/gfxlib/simple2x.o                                                          \
                   source/gfxlib/tv2x.o
 endif
 
-ifdef BUILD_MMX
-GFX 	       += source/gfxlib/2xSaImmx.o                                                          \
-                  source/gfxlib/bilinearmmx.o                                                       \
-                  source/gfxlib/hq2x16mmx.o
-endif
+#ifdef BUILD_MMX
+#GFX 	       += source/gfxlib/2xSaImmx.o                                                          \
+#                  source/gfxlib/bilinearmmx.o                                                       \
+#                  source/gfxlib/hq2x16mmx.o
+#endif
 
 GAME	        = source/gamelib/draw.o                                                             \
                   source/gamelib/draw16.o                                                           \
@@ -563,7 +558,7 @@ LIBS           += -lSDL -lts
 else
 COMMA		=,
 RPATH_LIBS	= $(addprefix -Wl$(COMMA)-rpath$(COMMA),"$(LIBRARIES)")
-LIBS	       += $(RPATH_LIBS) -lSDL2
+LIBS	       += $(RPATH_LIBS) C:/dev/hdr/SDL-uwp-gl/VisualC-WinRT/x64/Release/SDL-UWP/SDL2.dll
 
 ifdef CROSSCOMPILE_LINUX_WIN
 LIBS	       += -lsetupapi

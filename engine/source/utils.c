@@ -210,6 +210,10 @@ CLOSE_AND_QUIT:
 
 void writeToLogFile(const char *msg, ...)
 {
+// DLW: Disabling file logging on UWP because of infinite loop behavior in getAllLogs
+// TODO: Figure out the root cause and allow for logging again
+   return;
+#if 0
     va_list arglist;
     if(openborLog == NULL)
     {
@@ -223,10 +227,14 @@ void writeToLogFile(const char *msg, ...)
     vfprintf(openborLog, msg, arglist);
     va_end(arglist);
     fflush(openborLog);
+#endif
 }
 
 void writeToScriptLog(const char *msg)
 {
+// DLW: See above notes
+   return;
+#if 0
     if(scriptLog == NULL)
     {
         scriptLog = OPEN_LOGFILE(SCRIPT_LOG);
@@ -237,6 +245,7 @@ void writeToScriptLog(const char *msg)
     }
     fwrite(msg, 1, strlen(msg), scriptLog);
     fflush(scriptLog);
+#endif
 }
 
 void debug_printf(char *format, ...)

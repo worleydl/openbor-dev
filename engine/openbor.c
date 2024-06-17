@@ -2619,7 +2619,7 @@ void clearsettings()
     savedata.showtitles = 0;
     savedata.windowpos = 0;
     savedata.logo = 1;
-    savedata.uselog = 1;
+    savedata.uselog = 0; // No logging by default on UWP, may be broken due to getAllLogs infinite loop behavior
     savedata.debuginfo = 0;
     savedata.fullscreen = 1;
     savedata.fpslimit = 1; // default to vsync

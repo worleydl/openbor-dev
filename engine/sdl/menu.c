@@ -92,6 +92,7 @@ static int Control()
 	return pControl();
 }
 
+#if 0
 static void getAllLogs()
 {
 	ptrdiff_t i, j, k;
@@ -149,6 +150,7 @@ static void freeAllLogs()
 		}
 	}
 }
+#endif
 
 static void sortList()
 {
@@ -739,7 +741,7 @@ void Menu()
 	if((dListTotal = findPaks()) != 1)
 	{
 		sortList();
-		getAllLogs();
+		//getAllLogs();  // DLW: Breaking on UWP for unknown reasons
 		packfile_music_read(filelist, dListTotal);
 		initMenu(1);
 		drawMenu();
@@ -790,7 +792,7 @@ void Menu()
 
             blit_video_menu(vscreen);
 		}
-		freeAllLogs();
+		//freeAllLogs();
 		termMenu();
 		if(ctrl == 2)
 		{

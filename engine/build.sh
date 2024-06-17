@@ -225,7 +225,7 @@ function windows {
 			windres.exe resources/OpenBOR.rc -o resources/OpenBOR.res -O coff
 		fi
     make BUILD_WIN=1
-    if test -f "./OpenBOR.exe"; then
+    if test -f "./OpenBOR.dll"; then
       if test ! -e "./releases/WINDOWS" ; then
         mkdir ./releases/WINDOWS
         mkdir ./releases/WINDOWS/OpenBOR
@@ -234,7 +234,8 @@ function windows {
         mkdir ./releases/WINDOWS/OpenBOR/Saves
         mkdir ./releases/WINDOWS/OpenBOR/ScreenShots
       fi
-      mv OpenBOR.exe ./releases/WINDOWS/OpenBOR
+      mv OpenBOR.lib ./releases/WINDOWS/OpenBOR
+      mv OpenBOR.dll ./releases/WINDOWS/OpenBOR
     fi
     make clean BUILD_WIN=1
   fi

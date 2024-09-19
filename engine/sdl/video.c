@@ -40,6 +40,7 @@ int nativeWidth, nativeHeight; // monitor resolution used in fullscreen mode
 int brightness = 0;
 
 __declspec(dllimport) void uwp_GetScreenSize(int*, int*);
+__declspec(dllimport) float uwp_GetRefreshRate();
 
 void initSDL()
 {
@@ -322,10 +323,13 @@ int video_display_yuv_frame(void)
 
 int video_current_refresh_rate()
 {
+    return uwp_GetRefreshRate();
+#if 0
     SDL_DisplayMode display_mode;
     if (SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(window), &display_mode) != 0)
         return 60;
     return display_mode.refresh_rate;
+#endif
 }
 
 void vga_vwait(void)

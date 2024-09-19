@@ -208,8 +208,8 @@ int video_gl_set_mode(s_videomodes videomodes)
 	displayHeight = textureHeight = videomodes.vRes;
 
 	// use the current monitor resolution in fullscreen mode to prevent aspect ratio distortion
-	viewportWidth = savedata.fullscreen ? nativeWidth : (int)(videomodes.hRes * MAX(0.25,videomodes.hScale));
-	viewportHeight = savedata.fullscreen ? nativeHeight : (int)(videomodes.vRes * MAX(0.25,videomodes.vScale));
+	viewportWidth = savedata.fullscreen ? nativeWidth : (int)(videomodes.hRes * MAX(0.25, videomodes.hScale));
+	viewportHeight = savedata.fullscreen ? nativeHeight : (int)(videomodes.vRes * MAX(0.25, videomodes.vScale));
 
 	// zero width/height means close the window, not make it enormous!
 	if((viewportWidth == 0) || (viewportHeight == 0)) return 0;
@@ -284,7 +284,7 @@ int video_gl_set_mode(s_videomodes videomodes)
 	}
 
 	// set proper viewport width/height for high-DPI support
-	SDL_GL_GetDrawableSize(window, &viewportWidth, &viewportHeight);
+	//SDL_GL_GetDrawableSize(window, &viewportWidth, &viewportHeight);
 
 	// set background to black
 	glClearColor(0.0, 0.0, 0.0, 0.0);

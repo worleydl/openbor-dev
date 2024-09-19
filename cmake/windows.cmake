@@ -10,7 +10,7 @@ set(USE_WEBM    ON)
 set(USE_PTHREAD ON)
 
 set(ENABLE_STATIC     ON)
-set(ENABLE_STATIC_SDL ON)
+set(ENABLE_STATIC_SDL OFF)
 
 add_definitions(-DWIN -DELF)
 

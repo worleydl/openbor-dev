@@ -71,5 +71,6 @@ add_custom_command(TARGET ${PROJECT_NAME}
   COMMAND ${CMAKE_COMMAND} -E make_directory ../engine/releases/WINDOWS/Paks
   COMMAND ${CMAKE_COMMAND} -E make_directory ../engine/releases/WINDOWS/Saves
   COMMAND ${CMAKE_COMMAND} -E make_directory ../engine/releases/WINDOWS/ScreenShots
-  COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_NAME}.exe ../engine/releases/WINDOWS/${PROJECT_NAME}${ARCH_SUFFIX}.exe
+  COMMAND ${CMAKE_COMMAND} -E copy libOpenBOR.dll ../engine/releases/WINDOWS/libOpenBOR.dll
+  COMMAND ${CMAKE_COMMAND} -E copy libOpenBOR.dll.a ../engine/releases/WINDOWS/libOpenBOR.dll.a
 )

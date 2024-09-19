@@ -39,6 +39,8 @@ int opengl = 0; // OpenGL backend currently in use?
 int nativeWidth, nativeHeight; // monitor resolution used in fullscreen mode
 int brightness = 0;
 
+__declspec(dllimport) void uwp_GetScreenSize(int*, int*);
+
 void initSDL()
 {
 	SDL_DisplayMode video_info;
@@ -60,7 +62,8 @@ void initSDL()
 	}
 #endif
 
-	SDL_GetCurrentDisplayMode(0, &video_info);
+	//SDL_GetCurrentDisplayMode(0, &video_info);
+	uwp_GetScreenSize(&video_info.w, &video_info.h);
 	nativeWidth = video_info.w;
 	nativeHeight = video_info.h;
 	printf("debug:nativeWidth, nativeHeight, bpp, Hz  %d, %d, %d, %d\n", nativeWidth, nativeHeight, SDL_BITSPERPIXEL(video_info.format), video_info.refresh_rate);

@@ -22,7 +22,7 @@ endif
 
 ifdef BUILD_WIN
 TARGET          = $(VERSION_NAME).elf
-TARGET_FINAL    = $(VERSION_NAME).dll
+TARGET_FINAL    = $(VERSION_NAME).elf
 TARGET_PLATFORM = WIN
 TARGET_ARCH     = x86_64-w64-mingw32
 TARGET_RESOURCE = resources/$(VERSION_NAME).res
@@ -569,7 +569,7 @@ endif
 
 
 ifdef BUILD_WIN
-LIBS           += -lpsapi -lopengl32 -lwinmm -lole32 -loleaut32 -luuid -limm32 -lversion -mwindows
+LIBS           += -lpsapi -lopengl32 -lwinmm -lole32 -loleaut32 -luuid -limm32 -lversion -mwindows ../uwpdep/libuwp.dll
 endif
 
 

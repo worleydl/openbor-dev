@@ -69,7 +69,8 @@ set(SRC_FILES
 )
 
 # Target Executable
-add_executable(${PROJECT_NAME} ${SRC_FILES})
+#add_executable(${PROJECT_NAME} ${SRC_FILES})
+add_library(${PROJECT_NAME} SHARED ${SRC_FILES})
 add_dependencies(${PROJECT_NAME} VersionInfo)
 
 # Auto-Detect
@@ -161,8 +162,12 @@ if(USE_SDL)
     )
   endif() 
   target_link_libraries(${PROJECT_NAME} PUBLIC
-    SDL2
-    SDL2main
+    #SDL2
+    #SDL2main
+    ${CMAKE_SOURCE_DIR}/uwpdep/SDL2.dll
+  )
+  target_link_libraries(${PROJECT_NAME} PRIVATE
+    ${CMAKE_SOURCE_DIR}/uwpdep/libuwp.dll
   )
 endif()
 

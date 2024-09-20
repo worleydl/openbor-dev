@@ -247,7 +247,16 @@ void writeToLogFile(const char *msg, ...)
 {
 // DLW: Disabling file logging on UWP because of infinite loop behavior in getAllLogs
 // TODO: Figure out the root cause and allow for logging again
-   return;
+    va_list arglist;
+
+    char tmp[2048];
+
+    va_start(arglist, msg);
+    vsprintf(tmp, msg, arglist);
+    va_end(arglist);
+
+    uwp_LogMessage(tmp);
+    return;
 #if 0
     va_list arglist;
 

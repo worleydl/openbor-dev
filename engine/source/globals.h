@@ -20,6 +20,8 @@
 #include <inttypes.h>
 #include <ctype.h>
 
+__declspec(dllimport) void uwp_LogMessage(char* msg);
+
 #include "omath.h"
 #include "utils.h"
 #include "safealloc.h"

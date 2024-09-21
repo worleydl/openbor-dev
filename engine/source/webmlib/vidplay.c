@@ -121,6 +121,7 @@ int queue_insert(FixedSizeQueue *queue, void *data)
     //SPIT("size=%i\n", queue->size);
     if (queue->size == queue->max_size)
     {
+        redo_max_check:
         while(cond_wait_timed(queue->not_full, queue->mutex, 10) != 0)
         {
             if (quit_video)
@@ -130,6 +131,9 @@ int queue_insert(FixedSizeQueue *queue, void *data)
             }
             else if (queue->size < queue->max_size) break;
         }
+
+        // Xbox's cond impl seems to keep old signals lying around so we have to verify
+        if (queue->size == queue->max_size) goto redo_max_check;
     }
     assert(queue->size < queue->max_size);
     int index = (queue->start + queue->size) % queue->max_size;
@@ -149,6 +153,7 @@ void *queue_get(FixedSizeQueue *queue)
     //SPIT("size=%i\n", queue->size);
     if (queue->size == 0)
     {
+        redo_zero_check:
         while (cond_wait_timed(queue->not_empty, queue->mutex, 10) != 0)
         {
             if (quit_video)
@@ -158,6 +163,9 @@ void *queue_get(FixedSizeQueue *queue)
             }
             else if (queue->size > 0) break;
         }
+
+        // XBOX cond impl keeps old signals lying around if no wait caught them, doublecheck
+        if (queue->size == 0) goto redo_zero_check;
     }
     assert(queue->size > 0);
     void *data = queue->data[queue->start];

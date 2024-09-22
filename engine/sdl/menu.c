@@ -458,6 +458,9 @@ static void initMenu(int type)
 	bpp = 32;
 	savedata.hwscale = 0.0f;
 #endif
+	// Enable wide/full for UWP
+	isWide = (float)nativeHeight/(float)nativeWidth < 3.0f/4.0f;
+	isFull = 1;
 
 	pixelformat = PIXEL_x8;
 
@@ -465,9 +468,9 @@ static void initMenu(int type)
 	video_stretch(savedata.stretch);
 
 	//Kratus (10-2022) Removed the default BOR logo on Windows version
-	videomodes.hRes = isWide ? 80 :80;
-	videomodes.vRes = isWide ? 60 :60;
-	videomodes.pixel = pixelbytes[PIXEL_8];
+	videomodes.hRes = isWide ? 480 : 320;
+	videomodes.vRes = isWide ? 272 : 240;
+	videomodes.pixel = pixelbytes[PIXEL_32];
 	// videomodes.hRes = isWide ? 480 :320;
 	// videomodes.vRes = isWide ? 272 :240;
 	// videomodes.pixel = pixelbytes[PIXEL_32];
@@ -731,7 +734,7 @@ void Menu()
 	int done = 0;
 	int ctrl = 0;
 	loadsettings();
-	drawLogo();
+	//drawLogo(); // Disabled until I update bundle to include logo files otherwise it's needless delay
 	dListCurrentPosition = 0;
 	if((dListTotal = findPaks()) != 1)
 	{
